@@ -62,43 +62,20 @@
 <section class="featured-products">
     <h2>Nos produits</h2>
     <div class="product-list">
-        <div class="product-card">
-            <img src="example1.jpg" alt="Produit 1">
-            <h3>Produit 1</h3>
-            <p>49,99 €</p>
-            <button>Ajouter</button>
-        </div>
-        <div class="product-card">
-            <img src="example2.jpg" alt="Produit 2">
-            <h3>Produit 2</h3>
-            <p>59,99 €</p>
-            <button>Ajouter</button>
-        </div>
-        <div class="product-card">
-            <img src="example3.jpg" alt="Produit 3">
-            <h3>Produit 3</h3>
-            <p>39,99 €</p>
-            <button>Ajouter</button>
-        </div>
-        <div class="product-card">
-            <img src="example1.jpg" alt="Produit 1">
-            <h3>Produit 1</h3>
-            <p>49,99 €</p>
-            <button>Ajouter</button>
-        </div>
-        <div class="product-card">
-            <img src="example2.jpg" alt="Produit 2">
-            <h3>Produit 2</h3>
-            <p>59,99 €</p>
-            <button>Ajouter</button>
-        </div>
-        <div class="product-card">
-            <img src="example3.jpg" alt="Produit 3">
-            <h3>Produit 3</h3>
-            <p>39,99 €</p>
-            <button>Ajouter</button>
-        </div>
+        {% for article in articles %}
+            <div class="product-card">
+                <img src="{{ article.image }}" alt="{{ article.nom }}">
+                <div class="product-informations">
+                    <h3>{{ article.nom }}</h3>
+                    <p class="price">{{ article.prix }} €</p>
+                    <p class="category">{{ article.categorie }}</p>
+                    <button class="view-all-button">Ajouter</button>
+                </div>
+            </div>
+        {% endfor %}
     </div>
+</section>
+
     <div class="button-container">
         <a href="boutique.html" class="view-all-button">Voir tous les articles</a>
     </div>
