@@ -3,19 +3,20 @@
 {% block title %}Articles - {{ categorie }} - Jeans-Lassape{% endblock %}
 
 {% block body %}
-
     <section class="bannerarticles">
         {% if genre == 'Homme' %}
             <div class="bannerarticles-image2"></div>
-    {% elseif genre == 'Femme' %}
+        {% elseif genre == 'Femme' %}
             <div class="bannerarticles-image3"></div>
-    {% else %}
-             <div class="bannerarticles-image1"></div>
-    {% endif %}
+        {% else %}
+            <div class="bannerarticles-image1"></div>
+        {% endif %}
     </section>
 
-
-<h2>Articles pour la catégorie "{{ categorie }}"</h2>
+    <h2>Articles pour la catégorie "{{ categorie }}"</h2>
+        <div class="pagination">
+        {{ knp_pagination_render(articles) }}
+    </div>
     <section class="featured-products">
         <div class="product-list">
             {% for article in articles %}
@@ -33,4 +34,8 @@
             {% endfor %}
         </div>
     </section>
+
+    <div class="pagination">
+        {{ knp_pagination_render(articles) }}
+    </div>
 {% endblock %}

@@ -170,6 +170,38 @@ class AppFixtures extends Fixture
                 'prix' => 9.99,
                 'description' => 'Chaussettes douces en laine, parfaites pour l\'hiver.',
                 'image' => '/articles/chaussettelaine.jpg'
+            ],
+            [
+                'nom' => 'Gants en cuir Homme',
+                'categorie' => 'Accessoires',
+                'genre' => 'Homme',
+                'prix' => 49.99,
+                'description' => 'Gants en cuir de qualité pour l\'hiver.',
+                'image' => '/articles/gantscuir.jpg'
+            ],
+            [
+                'nom' => 'Gants en cuir Homme',
+                'categorie' => 'Accessoires',
+                'genre' => 'Homme',
+                'prix' => 49.99,
+                'description' => 'Gants en cuir de qualité pour l\'hiver.',
+                'image' => '/articles/gantscuir.jpg'
+            ],
+            [
+                'nom' => 'Gants en cuir Homme',
+                'categorie' => 'Accessoires',
+                'genre' => 'Homme',
+                'prix' => 49.99,
+                'description' => 'Gants en cuir de qualité pour l\'hiver.',
+                'image' => '/articles/gantscuir.jpg'
+            ],
+            [
+                'nom' => 'Gants en cuir Homme',
+                'categorie' => 'Accessoires',
+                'genre' => 'Homme',
+                'prix' => 49.99,
+                'description' => 'Gants en cuir de qualité pour l\'hiver.',
+                'image' => '/articles/gantscuir.jpg'
             ]
         ];
 

@@ -381,6 +381,49 @@ h2 {
     height: 100%;
     background: rgba(0, 0, 0, 0.4); 
 }
+/*pagination*/
+body .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    margin-bottom: 20px;
+}
+
+body .pagination a {
+    padding: 10px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+    border-radius: 50%; /* Boutons ronds */
+    transition: background-color 0.3s, color 0.3s;
+    width: 20px; /* Largeur fixe */
+    height: 20px; /* Hauteur fixe */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body .pagination a:hover {
+    background-color: #d2b48c; /* Tan */
+    color: #fff;
+    border-color: #d2b48c;
+}
+
+.pagination .current {
+    padding: 10px;
+    margin: 0 5px;
+    border: 3px solid #ddd;
+    width: 17px; /* Largeur fixe */
+    height: 17px; /* Hauteur fixe */
+    line-height: 17px;
+    border-radius: 50%;
+    background-color: #d2b48c;
+    color: white;
+    text-align: center;
+
+}
+
 /*L'histoire de jeans lassape dans la baniere2*/
 
 .white-box {

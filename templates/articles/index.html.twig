@@ -9,10 +9,9 @@
 
     <section class="articles">
         <h2>Nos Articles</h2>
-        <div class="filters">
-            <!-- Ajoute ici des filtres si nécessaire -->
+        <div class="pagination">
+            {{ knp_pagination_render(articles) }}
         </div>
-
         <section class="featured-products">
             <div class="product-list">
                 {% for article in articles %}
@@ -30,7 +29,7 @@
         </section>
 
         <div class="pagination">
-            <!-- Si tu as une pagination, ajoute ici -->
+            {{ knp_pagination_render(articles) }}
         </div>
     </section>
 {% endblock %}
