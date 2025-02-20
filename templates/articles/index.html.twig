@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - Jeans-Lassape</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo"></div>
+        <nav>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <a href="nouveautes.html">Nouveautés ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">Vêtements</a>
+                        <a href="#">Chaussures</a>
+                        <a href="#">Accessoires</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="hommes.html">Hommes ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">T-shirts</a>
+                        <a href="#">Pantalons</a>
+                        <a href="#">Vestes</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="femmes.html">Femmes ▼</a>
+                    <div class="dropdown-content">
+                        <a href="#">Robes</a>
+                        <a href="#">Jupes</a>
+                        <a href="#">Accessoires</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-icons">
+                <a href="/search" class="search"></a>
+                <a href="/cart" class="panier"></a>
+                <a href="{{ path('app_login') }}" class="profile"></a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="bannerunisex">
+    <div class="bannerunisex-image1"></div>
+    </div>
+</section>
+
+    <section class="articles">
+        <h2>Nos Articles</h2>
+        <div class="filters">
+        </div>
+<section class="featured-products">
+    <div class="product-list">
+        {% for article in articles %}
+            <div class="product-card">
+                <img src="{{ article.image }}" alt="{{ article.nom }}">
+                <div class="product-informations">
+                    <h3>{{ article.nom }}</h3>
+                    <p class="price">{{ article.prix }} €</p>
+                    <p class="category">{{ article.categorie }}</p>
+                    <button class="view-all-button">Ajouter</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+        <div class="pagination">
+         
+         
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>
+    </footer>
+</body>
+</html>

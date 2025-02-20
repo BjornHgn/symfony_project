@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Article; // Ajoutez cette ligne
+use App\Entity\Article;
 
 class AppFixtures extends Fixture
 {
