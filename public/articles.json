@@ -1,0 +1,185 @@
+{
+    "articles": [
+      {
+        "id": 1,
+        "nom": "T-shirt Homme",
+        "categorie": "Vêtements",
+        "genre": "Homme",
+        "prix": 19.99,
+        "description": "T-shirt basique en coton, confortable et élégant.",
+        "image": "/articles/t-shirtblanc.jpg"
+      },
+      {
+        "id": 2,
+        "nom": "Robe Femme",
+        "categorie": "Vêtements",
+        "genre": "Femme",
+        "prix": 39.99,
+        "description": "Robe élégante pour toutes les occasions.",
+        "image": "/articles/roberouge.jpg"
+      },
+      {
+        "id": 3,
+        "nom": "Chaussures de sport Homme",
+        "categorie": "Chaussures",
+        "genre": "Homme",
+        "prix": 79.99,
+        "description": "Chaussures de sport confortables pour une utilisation quotidienne.",
+        "image": "/articles/chaussurehommesport.jpg"
+      },
+      {
+        "id": 4,
+        "nom": "Bottes Femme",
+        "categorie": "Chaussures",
+        "genre": "Femme",
+        "prix": 99.99,
+        "description": "Bottes élégantes en cuir pour l'hiver.",
+        "image": "/articles/bottefemme.jpg"
+      },
+      {
+        "id": 5,
+        "nom": "Sac à main en cuir",
+        "categorie": "Accessoires",
+        "genre": "Femme",
+        "prix": 129.99,
+        "description": "Sac à main en cuir véritable, parfait pour toutes les occasions.",
+        "image": "/articles/sacamaincuire.jpg"
+      },
+      {
+        "id": 6,
+        "nom": "Montre Homme",
+        "categorie": "Accessoires",
+        "genre": "Homme",
+        "prix": 149.99,
+        "description": "Montre élégante avec bracelet en cuir.",
+        "image": "/articles/montrehomme.jpg"
+      },
+      {
+        "id": 7,
+        "nom": "Jean Slim Femme",
+        "categorie": "Vêtements",
+        "genre": "Femme",
+        "prix": 49.99,
+        "description": "Jean slim confortable et stylé.",
+        "image": "/articles/jeansslimefemme.jpg"
+      },
+      {
+        "id": 8,
+        "nom": "Blouson Homme",
+        "categorie": "Vêtements",
+        "genre": "Homme",
+        "prix": 89.99,
+        "description": "Blouson en cuir pour un look moderne et audacieux.",
+        "image": "/articles/blousoncuirehomme.jpg"
+      },
+      {
+        "id": 9,
+        "nom": "Pull Femme",
+        "categorie": "Vêtements",
+        "genre": "Femme",
+        "prix": 34.99,
+        "description": "Pull en laine, idéal pour les journées fraîches.",
+        "image": "/articles/blousoncuirehomme.jpg"
+      },
+      {
+        "id": 10,
+        "nom": "Pantalon Chino Homme",
+        "categorie": "Vêtements",
+        "genre": "Homme",
+        "prix": 59.99,
+        "description": "Pantalon chino classique pour un look chic décontracté.",
+        "image": "/articles/pulllainefemme.jpg"
+      },
+      {
+        "id": 11,
+        "nom": "Chaussures Baskets Femme",
+        "categorie": "Chaussures",
+        "genre": "Femme",
+        "prix": 59.99,
+        "description": "Baskets blanches tendance, confort et style.",
+        "image": "/articles/basketfemmeblanche.jpg"
+      },
+      {
+        "id": 12,
+        "nom": "Veste de costume Homme",
+        "categorie": "Vêtements",
+        "genre": "Homme",
+        "prix": 179.99,
+        "description": "Veste de costume classique, parfait pour les occasions formelles.",
+        "image": "/articles/vestecostumehomme.jpg"
+      },
+      {
+        "id": 13,
+        "nom": "Chapeau de paille Femme",
+        "categorie": "Accessoires",
+        "genre": "Femme",
+        "prix": 25.99,
+        "description": "Chapeau de paille léger, idéal pour l'été.",
+        "image": "/articles/chapeaupaillefemme.jpg"
+      },
+      {
+        "id": 14,
+        "nom": "Cagoule Homme",
+        "categorie": "Accessoires",
+        "genre": "Homme",
+        "prix": 15.99,
+        "description": "Cagoule chaude pour l'hiver.",
+        "image": "/articles/cagoulehomme.jpg"
+      },
+      {
+        "id": 15,
+        "nom": "Mocassins Femme",
+        "categorie": "Chaussures",
+        "genre": "Femme",
+        "prix": 69.99,
+        "description": "Mocassins élégants en daim, parfaits pour une allure chic.",
+        "image": "/articles/mocassinfemme.jpg"
+      },
+      {
+        "id": 16,
+        "nom": "T-shirt à imprimé Homme",
+        "categorie": "Vêtements",
+        "genre": "Homme",
+        "prix": 24.99,
+        "description": "T-shirt avec un imprimé graphique moderne.",
+        "image": "/articles/imprimehomme.jpg"
+      },
+      {
+        "id": 17,
+        "nom": "Blouse Femme",
+        "categorie": "Vêtements",
+        "genre": "Femme",
+        "prix": 39.99,
+        "description": "Blouse légère en soie, idéale pour le printemps.",
+        "image": "/articles/blousefemme.jpg"
+      },
+      {
+        "id": 18,
+        "nom": "Casquette Homme",
+        "categorie": "Accessoires",
+        "genre": "Homme",
+        "prix": 19.99,
+        "description": "Casquette à la mode pour un look décontracté.",
+        "image": "/articles/casquettehomme.jpg"
+      },
+      {
+        "id": 19,
+        "nom": "Gants en cuir Homme",
+        "categorie": "Accessoires",
+        "genre": "Homme",
+        "prix": 49.99,
+        "description": "Gants en cuir de qualité pour l'hiver.",
+        "image": "/articles/gantscuir.jpg"
+      },
+      {
+        "id": 20,
+        "nom": "Chaussettes en laine",
+        "categorie": "Accessoires",
+        "genre": "Unisexe",
+        "prix": 9.99,
+        "description": "Chaussettes douces en laine, parfaites pour l'hiver.",
+        "image": "/articles/chaussettelaine.jpg"
+      }
+    ]
+  }
+  
