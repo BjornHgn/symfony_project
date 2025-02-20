@@ -325,10 +325,10 @@ h2 {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-/*Banniere articles unisex*/
+/*Banniere articles*/
 
-
-.bannerunisex-image1 {
+/*1*/
+.bannerarticles-image1 {
     background-image: url('/images/banniereunisex.png');
     background-size: cover;
     background-position: center -400px;
@@ -336,7 +336,43 @@ h2 {
     height: 500px;
     position: relative;
 }
-.bannerunisex-image1::after {
+.bannerarticles-image1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+}
+/*2*/
+.bannerarticles-image2 {
+    background-image: url('/images/bannierearticles1.jpg');
+    background-size: cover;
+    background-position: center -100px;
+    width: 100%;
+    height: 500px;
+    position: relative;
+}
+.bannerarticles-image2::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+}
+/*3*/
+.bannerarticles-image3 {
+    background-image: url('/images/bannierearticles2.jpg');
+    background-size: cover;
+    background-position: center -100px;
+    width: 100%;
+    height: 500px;
+    position: relative;
+}
+.bannerarticles-image3::after {
     content: "";
     position: absolute;
     top: 0;

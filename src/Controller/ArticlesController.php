@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticlesController extends AbstractController
 {
-    // Route pour afficher tous les articles
     #[Route('/articles', name: 'app_articles')]
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -20,14 +19,19 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-    // Route pour afficher les articles par genre et catégorie
     #[Route('/articles/{genre}/{categorie}', name: 'app_articles_category')]
     public function category(string $genre, string $categorie, ArticleRepository $articleRepository): Response
     {
-        $articles = $articleRepository->findBy([
-            'genre' => $genre,
-            'categorie' => $categorie,
-        ]);
+        if ($categorie === 'Tous') {
+            $articles = $articleRepository->findBy([
+                'genre' => $genre,
+            ]);
+        } else {
+            $articles = $articleRepository->findBy([
+                'genre' => $genre,
+                'categorie' => $categorie,
+            ]);
+        }
 
         return $this->render('articles/category.html.twig', [
             'articles' => $articles,
@@ -36,11 +40,9 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-    // Route pour afficher les articles uniquement par genre
     #[Route('/articles/{genre}', name: 'app_articles_genre')]
     public function genre(string $genre, ArticleRepository $articleRepository): Response
     {
-        // Si la catégorie n'est pas spécifiée, on récupère tous les articles pour ce genre
         $articles = $articleRepository->findBy([
             'genre' => $genre,
         ]);
@@ -48,7 +50,7 @@ class ArticlesController extends AbstractController
         return $this->render('articles/category.html.twig', [
             'articles' => $articles,
             'genre' => $genre,
-            'categorie' => 'Tous', // Affiche 'Tous' comme catégorie par défaut
+            'categorie' => 'Tous', 
         ]);
     }
 }
