@@ -1,56 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Jeans-Lassape</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-<body>
-    <header>
-	
-        <a class="logo" href="/"></a>
-<nav>
-    <div class="nav-links">
-        <div class="dropdown">
-            <a href="nouveautes.html">Nouveautés ▼</a>
-            <div class="dropdown-content">
-                <a href="#">Vêtements</a>
-                <a href="#">Chaussures</a>
-                <a href="#">Accessoires</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="hommes.html">Hommes ▼</a>
-            <div class="dropdown-content">
-                <a href="#">T-shirts</a>
-                <a href="#">Pantalons</a>
-                <a href="#">Vestes</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <a href="femmes.html">Femmes ▼</a>
-            <div class="dropdown-content">
-                <a href="#">Robes</a>
-                <a href="#">Jupes</a>
-                <a href="#">Accessoires</a>
-            </div>
-        </div>
-    </div>
+{% block title %}Accueil - Jeans-Lassape{% endblock %}
 
-<div class="nav-icons">
-    <a href="/search" class="search">
-    </a>
-    <a href="/cart" class="panier">
-    </a>
-    <a href="{{ path('app_login') }}" class="profile">
-    </a>
-</div>
-
-
-    </header>
-
+{% block body %}
 <section class="banner">
     <div class="banner-image"></div>
     <div class="banner-content">
@@ -76,10 +28,9 @@
     </div>
 </section>
 
-    <div class="button-container">
-        <a href="/articles" class="view-all-button">Voir tous les articles</a>
-    </div>
-</section>
+<div class="button-container">
+    <a href="/articles" class="view-all-button">Voir tous les articles</a>
+</div>
 
 <section class="banner2">
     <div class="banner-image2"></div>
@@ -93,14 +44,4 @@
     </div>
 </section>
 
-
-</section>
-
-
-</section>
-
-    <footer>
-        <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>
-    </footer>
-</body>
-</html>
+{% endblock %}

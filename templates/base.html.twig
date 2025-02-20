@@ -1,17 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Accueil - Jeans-Lassape{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+    <header>
+        <a class="logo" href="/"></a>
+        <nav>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <a href="{{ path('app_articles_category', {'genre': 'Homme', 'categorie': 'Tous'}) }}">Hommes ▼</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('app_articles_category', {'genre': 'Homme', 'categorie': 'Vêtements'}) }}">Vêtements</a>
+                        <a href="{{ path('app_articles_category', {'genre': 'Homme', 'categorie': 'Chaussures'}) }}">Chaussures</a>
+                        <a href="{{ path('app_articles_category', {'genre': 'Homme', 'categorie': 'Accessoires'}) }}">Accessoires</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a href="{{ path('app_articles_category', {'genre': 'Femme', 'categorie': 'Tous'}) }}">Femmes ▼</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('app_articles_category', {'genre': 'Femme', 'categorie': 'Vêtements'}) }}">Vêtements</a>
+                        <a href="{{ path('app_articles_category', {'genre': 'Femme', 'categorie': 'Chaussures'}) }}">Chaussures</a>
+                        <a href="{{ path('app_articles_category', {'genre': 'Femme', 'categorie': 'Accessoires'}) }}">Accessoires</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-icons">
+                <a href="/search" class="search"></a>
+                <a href="/cart" class="panier"></a>
+                <a href="{{ path('app_login') }}" class="profile"></a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block body %}
+        <!-- Contenu spécifique de chaque page -->
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>
+    </footer>
+
+</body>
 </html>

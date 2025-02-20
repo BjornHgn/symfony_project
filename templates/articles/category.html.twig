@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles - {{ categorie }} - Jeans-Lassape{% endblock %}
+
+{% block body %}
+    <h2>Articles pour la catégorie "{{ categorie }}"</h2>
+
+    <section class="featured-products">
+        <div class="product-list">
+            {% for article in articles %}
+                <div class="product-card">
+                    <img src="{{ asset(article.image) }}" alt="{{ article.nom }}">
+                    <div class="product-informations">
+                        <h3>{{ article.nom }}</h3>
+                        <p class="price">{{ article.prix }} €</p>
+                        <p class="category">{{ article.categorie }}</p>
+                        <button class="view-all-button">Ajouter</button>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun article trouvé pour cette catégorie.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
