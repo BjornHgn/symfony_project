@@ -21,9 +21,9 @@ class AppFixtures extends Fixture
     {
         // Créer un utilisateur
         $user = new User();
-        $user->setEmail('admin@example.com')
-            ->setUsername('admin')
-            ->setRoles(['ROLE_ADMIN']);
+        $user->setEmail('user@mail.com')
+            ->setUsername('DefaultUser')
+            ->setRoles(['ROLE_USER']);
 
         $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
         $user->setPassword($hashedPassword);
