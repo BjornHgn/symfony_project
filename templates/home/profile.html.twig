@@ -10,6 +10,11 @@
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
+
+    <div class="add-article-button">
+        <a href="{{ path('app_add_article') }}" class="button-primary">Ajouter un article</a>
+    </div>
+
     <form action="{{ path('app_profile') }}" method="post" enctype="multipart/form-data">
         <label for="username">Nom d'utilisateur :</label>
         <input type="text" id="username" name="username" value="{{ user.username }}" required>
@@ -32,4 +37,28 @@
 
         <button type="submit">Enregistrer</button>
     </form>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .add-article-button {
+        margin: 20px 0;
+    }
+
+    .button-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .button-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
 {% endblock %}

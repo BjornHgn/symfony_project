@@ -87,6 +87,14 @@ public function details(int $id, ArticleRepository $articleRepository): Response
     ]);
 }
 
-    
- 
+    #[Route('/add_article', name: 'app_add_article')]
+    public function addArticle(): Response
+    {
+        // Vérifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
+        return $this->render('article/add.html.twig');
+    }
 }
