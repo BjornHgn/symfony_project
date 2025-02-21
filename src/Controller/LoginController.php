@@ -13,4 +13,10 @@ final class LoginController extends AbstractController
     {
         return $this->render('home/login.html.twig');
     }
+
+    #[Route('/register', name: 'app_register')]
+    public function register(): Response
+    {
+        return $this->render('home/register.html.twig');
+    }
 }
