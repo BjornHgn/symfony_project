@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -39,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $balance = "0.00";
 
     #[ORM\Column(length: 255)]
-    private ?string $profil_picture = "pngegg.png";
+    private ?string $profil_picture = "/images/pngegg.png";
 
     public function getId(): ?int
     {
@@ -57,6 +59,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+    #[ORM\OneToMany(mappedBy: "author", targetEntity: Article::class, cascade: ["remove"])]
+    private Collection $articles;
+
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: Cart::class, cascade: ["remove"])]
+    private Collection $carts;
+
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: Invoice::class, cascade: ["remove"])]
+    private Collection $invoices;
+
 
     /**
      * A visual identifier that represents this user.

@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: InvoiceRepository::class)]
 class Invoice
 {
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "invoices")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

@@ -10,6 +10,10 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 #[Broadcast]
 class Stock
 {
+    #[ORM\OneToOne(targetEntity: Article::class, inversedBy: "stock", cascade: ["remove"])]
+    #[ORM\JoinColumn(nullable: false, unique: true)]
+    private ?Article $article = null;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

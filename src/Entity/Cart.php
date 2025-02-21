@@ -8,8 +8,18 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
 #[Broadcast]
+
 class Cart
 {
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "carts")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: "carts")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Article $article = null;
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
