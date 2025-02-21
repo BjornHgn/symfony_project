@@ -33,13 +33,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $username = null;
+    private ?string $username = " ";
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $balance = null;
+    private ?string $balance = "0.00";
 
     #[ORM\Column(length: 255)]
-    private ?string $profil_picture = null;
+    private ?string $profil_picture = "pngegg.png";
 
     public function getId(): ?int
     {
