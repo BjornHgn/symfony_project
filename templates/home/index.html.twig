@@ -5,7 +5,9 @@
 {% block body %}
 {% if app.user %}
     <div class="profile">
-        <img src="{{ asset('images/profile-icon.png') }}" alt="Profile Icon">
+        <a href="{{ path('app_profile') }}">
+            <img src="{{ asset('images/profile-icon.png') }}" alt="Profile Icon">
+        </a>
         <p>Bienvenue, {{ app.user.username }}!</p>
         <a href="{{ path('app_logout') }}">
             <button type="button">Se déconnecter</button>

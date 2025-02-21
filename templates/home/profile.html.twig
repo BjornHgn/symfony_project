@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <h1>Profil de {{ user.username }}</h1>
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    <form action="{{ path('app_profile') }}" method="post" enctype="multipart/form-data">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+        <label for="profil_picture">Photo de profil :</label>
+        <input type="file" id="profil_picture" name="profil_picture">
+        <img src="{{ asset('images/' ~ user.profilPicture) }}" alt="Profile Picture">
+
+        <label for="current_password">Mot de passe actuel :</label>
+        <input type="password" id="current_password" name="current_password">
+
+        <label for="new_password">Nouveau mot de passe :</label>
+        <input type="password" id="new_password" name="new_password">
+
+        <label for="confirm_password">Confirmer le nouveau mot de passe :</label>
+        <input type="password" id="confirm_password" name="confirm_password">
+
+        <button type="submit">Enregistrer</button>
+    </form>
+{% endblock %}
