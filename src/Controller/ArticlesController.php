@@ -15,11 +15,10 @@ class ArticlesController extends AbstractController
     {
         $queryBuilder = $articleRepository->createQueryBuilder('a');
 
-        // Pagination
         $pagination = $paginator->paginate(
-            $queryBuilder, // La requête de base
-            $request->query->getInt('page', 1), // Numéro de page
-            10 // Nombre d'articles par page
+            $queryBuilder, 
+            $request->query->getInt('page', 1), 
+            10 
         );
 
         return $this->render('articles/index.html.twig', [
@@ -42,11 +41,10 @@ class ArticlesController extends AbstractController
                 ->setParameter('categorie', $categorie);
         }
 
-        // Pagination
         $pagination = $paginator->paginate(
-            $queryBuilder, // La requête filtrée
-            $request->query->getInt('page', 1), // Numéro de page
-            10 // Nombre d'articles par page
+            $queryBuilder,
+            $request->query->getInt('page', 1), 
+            10 
         );
 
         return $this->render('articles/category.html.twig', [
@@ -63,11 +61,10 @@ class ArticlesController extends AbstractController
             ->where('a.genre = :genre')
             ->setParameter('genre', $genre);
 
-        // Pagination
         $pagination = $paginator->paginate(
-            $queryBuilder, // La requête filtrée
-            $request->query->getInt('page', 1), // Numéro de page
-            10 // Nombre d'articles par page
+            $queryBuilder, 
+            $request->query->getInt('page', 1), 
+            10 
         );
 
         return $this->render('articles/category.html.twig', [
@@ -76,4 +73,20 @@ class ArticlesController extends AbstractController
             'categorie' => 'Tous',
         ]);
     }
+    #[Route('/article/{id}', name: 'app_article_details')]
+public function details(int $id, ArticleRepository $articleRepository): Response
+{
+    $article = $articleRepository->find($id);
+
+    if (!$article) {
+        throw $this->createNotFoundException('Article non trouvé');
+    }
+
+    return $this->render('articles/details.html.twig', [
+        'article' => $article,
+    ]);
+}
+
+    
+ 
 }

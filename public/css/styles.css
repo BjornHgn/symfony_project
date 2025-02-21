@@ -8,6 +8,7 @@ main {
 }
 
 
+
 /* Header */
 
 header {
@@ -225,7 +226,7 @@ h2 {
 
 .product-card .price {
     font-size: 1.1em;
-    color: #e74c3c;
+    color: #C1A78E;
     margin: 10px 0;
 }
 
@@ -253,6 +254,12 @@ h2 {
     text-align: center;
     margin-top: 20px;
 }
+/*pas de soulignement et ecriture bleu*/
+.product-list a {
+    text-decoration: none;  
+    color: black;     
+}
+
 /*Bannieres images*/
 
 /*1*/
@@ -463,3 +470,6 @@ footer {
     width: 100%;
     margin-top: auto; 
 }
+
+
+

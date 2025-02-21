@@ -15,15 +15,14 @@
     <h2>Nouveautés</h2>
     <div class="product-list">
         {% for article in articles %}
-            <div class="product-card">
+            <a class="product-card" href="/article/{{ article.id }}">
                 <img src="{{ article.image }}" alt="{{ article.nom }}">
                 <div class="product-informations">
                     <h3>{{ article.nom }}</h3>
                     <p class="price">{{ article.prix }} €</p>
                     <p class="category">{{ article.categorie }}</p>
-                    <button class="view-all-button">Ajouter</button>
                 </div>
-            </div>
+            </a>
         {% endfor %}
     </div>
 </section>

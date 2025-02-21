@@ -14,17 +14,16 @@
         </div>
         <section class="featured-products">
             <div class="product-list">
-                {% for article in articles %}
-                    <div class="product-card">
-                        <img src="{{ article.image }}" alt="{{ article.nom }}">
-                        <div class="product-informations">
-                            <h3>{{ article.nom }}</h3>
-                            <p class="price">{{ article.prix }} €</p>
-                            <p class="category">{{ article.categorie }}</p>
-                            <button class="view-all-button">Ajouter</button>
-                        </div>
-                    </div>
-                {% endfor %}
+        {% for article in articles %}
+            <a class="product-card" href="/article/{{ article.id }}">
+                <img src="{{ article.image }}" alt="{{ article.nom }}">
+                <div class="product-informations">
+                    <h3>{{ article.nom }}</h3>
+                    <p class="price">{{ article.prix }} €</p>
+                    <p class="category">{{ article.categorie }}</p>
+                </div>
+            </a>
+        {% endfor %}
             </div>
         </section>
 
