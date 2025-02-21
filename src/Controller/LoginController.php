@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class LoginController extends AbstractController
@@ -28,5 +28,17 @@ final class LoginController extends AbstractController
     public function register(): Response
     {
         return $this->render('home/register.html.twig');
+    }
+
+    #[Route('/redirect', name: 'app_redirect')]
+    public function redirectAfterLogin(): Response
+    {
+        $user = $this->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }
