@@ -8,33 +8,35 @@
 {% endblock %}
 
 {% block body %}
-    <div class="auth-container">
-        <h1>Inscription</h1>
-        <form action="{{ path('app_register') }}" method="post">
-            <div class="form-group">
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" required>
-            </div>
+    <div class="auth-page-wrapper">
+        <div class="auth-container">
+            <h1>Inscription</h1>
+            <form action="{{ path('app_register') }}" method="post">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-            <div class="form-group">
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
-            </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
-            <div class="form-group">
-                <label for="confirm_password">Confirmer le mot de passe :</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-            </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirmer le mot de passe :</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
 
-            <button type="submit">S'inscrire</button>
-        </form>
-        <div class="auth-links">
-            <p>Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+                <button type="submit">S'inscrire</button>
+            </form>
+            <div class="auth-links">
+                <p>Déjà un compte ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+            </div>
         </div>
     </div>
 {% endblock %}
