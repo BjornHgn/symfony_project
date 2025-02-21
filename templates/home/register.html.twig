@@ -5,6 +5,9 @@
 {% block body %}
     <h1>Inscription</h1>
     <form action="{{ path('app_register') }}" method="post">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required>
+
         <label for="email">Email :</label>
         <input type="email" id="email" name="email" required>
 

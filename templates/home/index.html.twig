@@ -3,6 +3,15 @@
 {% block title %}Accueil - Jeans-Lassape{% endblock %}
 
 {% block body %}
+{% if app.user %}
+    <div class="profile">
+        <img src="{{ asset('images/profile-icon.png') }}" alt="Profile Icon">
+        <p>Bienvenue, {{ app.user.username }}!</p>
+        <a href="{{ path('app_logout') }}">
+            <button type="button">Se déconnecter</button>
+        </a>
+    </div>
+{% endif %}
 <section class="banner">
     <div class="banner-image"></div>
     <div class="banner-content">
