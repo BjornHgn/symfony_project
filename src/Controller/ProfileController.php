@@ -17,6 +17,10 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
 
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        }
+
         if ($request->isMethod('POST')) {
             $user->setUsername($request->request->get('username'));
             $user->setEmail($request->request->get('email'));
