@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -36,21 +34,9 @@ class Article
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: 'integer')]
-    private int $authorId;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "articles")]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author = null;
-
-    #[ORM\OneToMany(mappedBy: "article", targetEntity: Cart::class, cascade: ["remove"])]
-    private Collection $carts;
-
-    #[ORM\OneToOne(mappedBy: "article", targetEntity: Stock::class)]
-    private ?Stock $stock = null;
-
-
-    // Getters et Setters
 
     public function getId(): ?int
     {
@@ -134,14 +120,14 @@ class Article
         return $this;
     }
 
-    public function getAuthorId(): int
+    public function getAuthor(): ?User
     {
-        return $this->authorId;
+        return $this->author;
     }
 
-    public function setAuthorId(int $authorId): self
+    public function setAuthor(?User $author): self
     {
-        $this->authorId = $authorId;
+        $this->author = $author;
         return $this;
     }
 }

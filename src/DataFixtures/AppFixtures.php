@@ -5,11 +5,31 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Article;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
+        // Créer un utilisateur
+        $user = new User();
+        $user->setEmail('admin@example.com')
+             ->setUsername('admin')
+             ->setRoles(['ROLE_ADMIN']);
+
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
+        $user->setPassword($hashedPassword);
+
+        $manager->persist($user);
+
         $articles = [
             [
                 'nom' => 'T-shirt Homme',
@@ -208,15 +228,14 @@ class AppFixtures extends Fixture
         foreach ($articles as $data) {
             $article = new Article();
             $article->setNom($data['nom'])
-                    ->setCategorie($data['categorie'])
-                    ->setGenre($data['genre'])
-                    ->setPrix($data['prix'])
-                    ->setDescription($data['description'])
-                    ->setImage($data['image'])
-                    ->setCreatedAt(new \DateTime()) // Initialisez la date de création
-                    ->setAuthorId(0); // Initialisez l'ID de l'auteur à 0
-
-            dump($article);  // Ajoutez cette ligne pour déboguer
+                   ->setCategorie($data['categorie'])
+                   ->setGenre($data['genre'])
+                   ->setPrix($data['prix'])
+                   ->setDescription($data['description'])
+                   ->setImage($data['image'])
+                   ->setCreatedAt(new \DateTime())
+                   ->setAuthor($user);
+            
             $manager->persist($article);
         }
 

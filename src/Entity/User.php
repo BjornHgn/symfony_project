@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     /**
@@ -34,14 +34,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 20, unique: true)]
-    private ?string $username = "";
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $balance = "0.00";
 
     #[ORM\Column(length: 255)]
     private ?string $profil_picture = "/images/pngegg.png";
+
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
+    private Collection $articles;
+
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: Cart::class, cascade: ["remove"])]
+    private Collection $carts;
+
+    #[ORM\OneToMany(mappedBy: "user", targetEntity: Invoice::class, cascade: ["remove"])]
+    private Collection $invoices;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,26 +67,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
-
-    public function __construct()
-    {
-        $this->articles = new ArrayCollection();
-    }
-    #[ORM\OneToMany(mappedBy: "author", targetEntity: Article::class, cascade: ["remove"])]
-    private Collection $articles;
-
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: Cart::class, cascade: ["remove"])]
-    private Collection $carts;
-
-    #[ORM\OneToMany(mappedBy: "user", targetEntity: Invoice::class, cascade: ["remove"])]
-    private Collection $invoices;
-
 
     /**
      * A visual identifier that represents this user.
@@ -101,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param list<string> $roles
      */
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -111,12 +110,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -137,7 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username;
     }
 
-    public function setUsername(string $username): static
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
@@ -166,5 +165,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profil_picture = $profil_picture;
 
         return $this;
+    }
+
+    public function getArticles(): Collection
+    {
+        return $this->articles;
     }
 }
