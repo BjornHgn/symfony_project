@@ -8,4 +8,32 @@
         {{ form_widget(form) }}
         <button type="submit">Save</button>
     {{ form_end(form) }}
+
+    <h2>Articles by {{ user.username }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Profile Picture</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Genre</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td><img src="{{ article.image }}" alt="Article Image" width="50" height="50"></td>
+                    <td>{{ article.nom }}</td>
+                    <td>{{ article.categorie }}</td>
+                    <td>{{ article.genre }}</td>
+                    <td>{{ article.prix }}</td>
+                    <td>
+                        <a href="{{ path('admin_article_edit', {id: article.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

@@ -8,7 +8,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Profile Picture</th>
                 <th>Email</th>
                 <th>Username</th>
                 <th>Roles</th>
@@ -18,7 +18,7 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.id }}</td>
+                    <td><img src="{{ user.profilPicture }}" alt="Profile Picture" width="50" height="50"></td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.roles|join(', ') }}</td>

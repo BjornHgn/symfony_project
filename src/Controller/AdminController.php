@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Article;
 use App\Form\UserType;
+use App\Form\ArticleType;
 use App\Repository\UserRepository;
+use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +27,7 @@ final class AdminController extends AbstractController
     }
 
     #[Route('/admin/user/edit/{id}', name: 'admin_user_edit')]
-    public function editUser(int $id, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function editUser(int $id, Request $request, UserRepository $userRepository, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $userRepository->find($id);
 
@@ -41,7 +44,34 @@ final class AdminController extends AbstractController
             return $this->redirectToRoute('app_admin');
         }
 
+        $articles = $articleRepository->findBy(['author' => $user]);
+
         return $this->render('admin/edit_user.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+            'articles' => $articles,
+        ]);
+    }
+
+    #[Route('/admin/article/edit/{id}', name: 'admin_article_edit')]
+    public function editArticle(int $id, Request $request, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
+    {
+        $article = $articleRepository->find($id);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Article not found');
+        }
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_user_edit', ['id' => $article->getAuthor()->getId()]);
+        }
+
+        return $this->render('admin/edit_article.html.twig', [
             'form' => $form->createView(),
         ]);
     }
