@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ProfileController extends AbstractController
 {
@@ -27,9 +29,21 @@ class ProfileController extends AbstractController
 
             if ($request->files->get('profil_picture')) {
                 $file = $request->files->get('profil_picture');
+                
+                $oldImagePath = $user->getProfilPicture();
+                if ($oldImagePath && $oldImagePath !== '/images/profile.png') {
+                    $filesystem = new Filesystem();
+                    $oldImageFullPath = $this->getParameter('kernel.project_dir') . '/public' . $oldImagePath;
+                    if ($filesystem->exists($oldImageFullPath)) {
+                        $filesystem->remove($oldImageFullPath);
+                    }
+                }
+
                 $filename = md5(uniqid()) . '.' . $file->guessExtension();
+                
                 $file->move($this->getParameter('images_directory'), $filename);
-                $user->setProfilPicture($filename);
+                
+                $user->setProfilPicture('/images/' . $filename);
             }
 
             if ($request->request->get('current_password') && $request->request->get('new_password') && $request->request->get('confirm_password')) {
@@ -58,4 +72,5 @@ class ProfileController extends AbstractController
             'user' => $user,
         ]);
     }
+
 }
