@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile of {{ user.username }}{% endblock %}
+
+{% block body %}
+    <h1>Profile of {{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Roles: {{ user.roles|join(', ') }}</p>
+    <img src="{{ user.profilPicture }}" alt="Profile Picture" width="100" height="100">
+{% endblock %}
