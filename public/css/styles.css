@@ -65,8 +65,8 @@ nav {
 
 /*Interrieur menus deroulant*/
 .dropdown {
-position: relative;
-color:white;
+    position: relative;
+    color:white;
 }
 
 .dropdown-content {
@@ -442,7 +442,6 @@ body .pagination a:hover {
     color: black;
     border-radius: 5px;
     border: 2px solid black; /* Bordure interne noire */
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     box-sizing: border-box; /* S'assure que la bordure est incluse dans la taille de l'élément */
     font-weight: bold;
     text-align: left;
@@ -592,4 +591,66 @@ footer {
     background-color: #C1A78E;  /* Mise à jour pour correspondre aux autres boutons */
     transform: none;  /* Suppression de l'effet de translation */
     box-shadow: none;  /* Suppression de l'ombre */
+}
+
+.profile-dropdown {
+    display: none; /* Masquer par défaut */
+    padding: 0;
+    overflow: hidden;
+    position: absolute; /* Positionner le dropdown */
+    z-index: 1000; /* S'assurer qu'il est au-dessus des autres éléments */
+    left: 50%; /* Centrer horizontalement */
+    transform: translateX(-50%); /* Ajuster pour centrer par rapport à l'icône */
+    margin-top: 0px; /* Réduire l'espace entre l'icône et le dropdown */
+}
+
+.dropdown .profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border: 2px solid #D8C3A5;
+    transition: border-color 0.3s ease;
+}
+
+.dropdown .profile:hover {
+    border-color: #C1A78E;
+}
+
+.profile-dropdown a {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-dropdown a:last-child {
+    border-bottom: none;
+}
+
+.user-info {
+    padding: 15px; /* Ajout de padding autour du conteneur */
+    background-color: #333C56;
+    border-radius: 5px 5px 0 0;
+    text-align: center; /* Centrer le texte */
+    margin-bottom: 10px; /* Ajout d'un espace entre le user-info et le reste du menu */
+}
+
+.user-name {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.user-balance {
+    color: #D8C3A5;
+    font-size: 0.9em;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
 }

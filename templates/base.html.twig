@@ -40,7 +40,23 @@
             <div class="nav-icons">
                 <a href="/search" class="search"></a>
                 <a href="/cart" class="panier"></a>
-                <a href="{{ path('app_login') }}" class="profile"></a>
+                {% if app.user %}
+                    <div class="dropdown">
+                        <div class="profile" style="background-image: url('{% if app.user.profilPicture %}{{ asset(app.user.profilPicture) }}{% else %}/images/profile.png{% endif %}');" onclick="toggleDropdown(event)"></div>
+                        <div class="dropdown-content profile-dropdown" id="profileDropdown">
+                            <div class="user-info">
+                                <div class="user-name">{{ app.user.username }}</div>
+                                <div class="user-balance">Solde : {{ app.user.balance }}€</div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ path('app_cart_index') }}">Mon Panier</a>
+                            <a href="{{ path('app_profile') }}">Mon Profil</a>
+                            <a href="{{ path('app_logout') }}">Déconnexion</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="profile"></a>
+                {% endif %}
             </div>
         </nav>
     </header>
@@ -54,6 +70,7 @@
     <footer>
         <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>
     </footer>
+
 
 </body>
 </html>
