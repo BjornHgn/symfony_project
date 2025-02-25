@@ -1,17 +1,18 @@
 <?php
+
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\StockRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Entity\Article;
-use App\Repository\StockRepository;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManagerInterface;
 
 class ArticlesController extends AbstractController
 {
@@ -90,15 +91,52 @@ class ArticlesController extends AbstractController
         ]);
     }
 
-
-    #[Route('/add_article', name: 'app_add_article')]
-    public function addArticle(): Response
+    #[Route('/article/edit/{id}', name: 'app_article_edit')]
+    public function editArticle(int $id, Request $request, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
     {
-        // Vérifier si l'utilisateur est connecté
-        if (!$this->getUser()) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à cette page.');
+        $article = $articleRepository->find($id);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Article not found');
         }
 
-        return $this->render('article/add.html.twig');
+        $user = $this->getUser();
+        if ($article->getAuthor() !== $user && !$this->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('You do not have permission to edit this article.');
+        }
+
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_article_details', ['id' => $article->getId()]);
+        }
+
+        return $this->render('articles/edit.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article,
+        ]);
+    }
+
+    #[Route('/article/delete/{id}', name: 'app_article_delete', methods: ['POST'])]
+    public function deleteArticle(int $id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager): Response
+    {
+        $article = $articleRepository->find($id);
+
+        if (!$article) {
+            throw $this->createNotFoundException('Article not found');
+        }
+
+        $user = $this->getUser();
+        if ($article->getAuthor() !== $user && !$this->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException('You do not have permission to delete this article.');
+        }
+
+        $entityManager->remove($article);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_articles');
     }
 }
