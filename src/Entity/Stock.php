@@ -10,17 +10,14 @@ use Symfony\UX\Turbo\Attribute\Broadcast;
 #[Broadcast]
 class Stock
 {
-    #[ORM\OneToOne(targetEntity: Article::class, inversedBy: "stock", cascade: ["remove"])]
-    #[ORM\JoinColumn(nullable: false, unique: true)]
-    private ?Article $article = null;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $article_id = null;
+    #[ORM\ManyToOne(targetEntity: Article::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Article $article = null;
 
     #[ORM\Column]
     private ?int $nbr_article = null;
@@ -30,15 +27,14 @@ class Stock
         return $this->id;
     }
 
-    public function getArticleId(): ?int
+    public function getArticle(): ?Article
     {
-        return $this->article_id;
+        return $this->article;
     }
 
-    public function setArticleId(int $article_id): static
+    public function setArticle(?Article $article): self
     {
-        $this->article_id = $article_id;
-
+        $this->article = $article;
         return $this;
     }
 
@@ -47,10 +43,9 @@ class Stock
         return $this->nbr_article;
     }
 
-    public function setNbrArticle(int $nbr_article): static
+    public function setNbrArticle(int $nbr_article): self
     {
         $this->nbr_article = $nbr_article;
-
         return $this;
     }
 }

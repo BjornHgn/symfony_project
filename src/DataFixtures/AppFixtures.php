@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Article;
 use App\Entity\User;
+use App\Entity\Stock;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -21,14 +22,12 @@ class AppFixtures extends Fixture
     {
         // Créer un utilisateur
         $user = new User();
-        $user->setEmail('user@mail.com')
-            ->setUsername('DefaultUser')
-            ->setRoles(['ROLE_USER']);
-
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
-        $user->setPassword($hashedPassword);
-
+        $user->setEmail('user@example.com');
+        $user->setUsername('user');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
         $manager->persist($user);
+        $manager->flush();
 
         $articles = [
             [
@@ -37,15 +36,15 @@ class AppFixtures extends Fixture
                 'genre' => 'Homme',
                 'prix' => 19.99,
                 'description' => 'T-shirt basique en coton, confortable et élégant.',
-                'image' => '/articles/t-shirtblanc.jpg'
+                'image' => '/articles/t-shirtblanc.jpg',
             ],
             [
                 'nom' => 'Robe Femme',
                 'categorie' => 'Vêtements',
                 'genre' => 'Femme',
                 'prix' => 39.99,
-                'description' => 'Robe élégante pour toutes les occasions.',
-                'image' => '/articles/roberouge.jpg'
+                'description' => 'Robe d\'été légère et élégante.',
+                'image' => '/articles/roberouge.jpg',
             ],
             [
                 'nom' => 'Chaussures de sport Homme',
@@ -225,20 +224,28 @@ class AppFixtures extends Fixture
             ]
         ];
 
-        foreach ($articles as $data) {
+        // Créer les articles
+        foreach ($articles as $articleData) {
             $article = new Article();
-            $article->setNom($data['nom'])
-                   ->setCategorie($data['categorie'])
-                   ->setGenre($data['genre'])
-                   ->setPrix($data['prix'])
-                   ->setDescription($data['description'])
-                   ->setImage($data['image'])
-                   ->setCreatedAt(new \DateTime())
-                   ->setAuthor($user);
+            $article->setNom($articleData['nom']);
+            $article->setCategorie($articleData['categorie']);
+            $article->setGenre($articleData['genre']);
+            $article->setPrix($articleData['prix']);
+            $article->setDescription($articleData['description']);
+            $article->setImage($articleData['image']);
+            $article->setCreatedAt(new \DateTime());
+            $article->setAuthor($user);
             
             $manager->persist($article);
-        }
+            $manager->flush();
 
-        $manager->flush();
+            // Créer le stock pour cet article
+            $stock = new Stock();
+            $stock->setArticle($article);
+            $stock->setNbrArticle(rand(50, 200));
+            
+            $manager->persist($stock);
+            $manager->flush();
+        }
     }
 }

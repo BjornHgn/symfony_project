@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="cart-container">
+    <h1 class="cart-title">Mon Panier</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if cart is empty %}
+        <p class="cart-empty">Votre panier est vide.</p>
+    {% else %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Article</th>
+                    <th>Taille</th>
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, item in cart %}
+                    <tr>
+                        <td>
+                            <img src="{{ item.image }}" alt="{{ item.name }}">
+                        </td>
+                        <td class="cart-product-name">{{ item.name }}</td>
+                        <td><span class="cart-size">{{ item.size }}</span></td>
+                        <td class="cart-price">{{ item.price }} €</td>
+                        <td class="cart-quantity">
+                            <form action="{{ path('app_cart_update', {'id': item.id, 'size': item.size}) }}" method="POST" class="quantity-form">
+                                <input type="number" 
+                                       name="quantity" 
+                                       value="{{ item.quantity }}" 
+                                       min="0" 
+                                       class="quantity-input"
+                                       onchange="this.form.submit()">
+                            </form>
+                        </td>
+                        <td class="cart-price">{{ (item.price * item.quantity)|number_format(2, ',', ' ') }} €</td>
+                        <td class="cart-actions-cell">
+                            <form action="{{ path('app_cart_update', {'id': item.id, 'size': item.size}) }}" method="POST">
+                                <input type="hidden" name="quantity" value="0">
+                                <button type="submit" class="btn-remove" onclick="return confirm('Voulez-vous vraiment supprimer cet article ?')">✕</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="cart-total-row">
+                    <td colspan="6" class="cart-total-label">Total</td>
+                    <td class="cart-total-amount">{{ total|number_format(2, ',', ' ') }} €</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="cart-actions">
+            <a href="{{ path('app_home') }}" class="btn btn-continue">Continuer mes achats</a>
+            <button class="btn btn-checkout">Passer la commande</button>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

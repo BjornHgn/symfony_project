@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Article;
+use App\Repository\StockRepository;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ArticlesController extends AbstractController
 {
@@ -73,19 +78,18 @@ class ArticlesController extends AbstractController
             'categorie' => 'Tous',
         ]);
     }
-    #[Route('/article/{id}', name: 'app_article_details')]
-public function details(int $id, ArticleRepository $articleRepository): Response
-{
-    $article = $articleRepository->find($id);
 
-    if (!$article) {
-        throw $this->createNotFoundException('Article non trouvé');
+    #[Route('/article/{id}', name: 'app_article_details')]
+    public function details(Article $article, StockRepository $stockRepository): Response
+    {
+        $stock = $stockRepository->findOneBy(['article' => $article]);
+        
+        return $this->render('articles/details.html.twig', [
+            'article' => $article,
+            'stockQuantity' => $stock ? $stock->getNbrArticle() : 0
+        ]);
     }
 
-    return $this->render('articles/details.html.twig', [
-        'article' => $article,
-    ]);
-}
 
     #[Route('/add_article', name: 'app_add_article')]
     public function addArticle(): Response

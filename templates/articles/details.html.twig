@@ -14,21 +14,26 @@
             <p class="price"><strong>Prix :</strong> <span>{{ article.prix }} €</span></p>
             <p class="description">{{ article.description }}</p>
 
-            <!-- Sélection de la taille -->
-            <label for="size">Taille :</label>
-            <select id="size" name="size">
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-            </select>
+            <!-- Affichage du stock -->
+            <p class="stock">
+                <strong>Stock disponible :</strong> 
+                <span>{{ stockQuantity }}</span> unités
+            </p>
 
-            <!-- Sélection de la quantité -->
-            <label for="quantity">Quantité :</label>
-            <input type="number" id="quantity" name="quantity" value="1" min="1">
+            <form action="{{ path('app_cart_add', {'id': article.id}) }}" method="POST">
+                <label for="size">Taille :</label>
+                <select id="size" name="size" required>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
 
-            <!-- Bouton Ajouter au panier -->
-            <button type="submit">🛒 Ajouter au panier</button>
+                <label for="quantity">Quantité :</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ stockQuantity }}" required>
+
+                <button type="submit" class="btn-add-cart">🛒 Ajouter au panier</button>
+            </form>
         </div>
     </div>
 {% endblock %}
