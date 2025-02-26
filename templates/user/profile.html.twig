@@ -8,4 +8,36 @@
     <p>Username: {{ user.username }}</p>
     <p>Roles: {{ user.roles|join(', ') }}</p>
     <img src="{{ user.profilPicture }}" alt="Profile Picture" width="100" height="100">
+
+    <h2>Articles by {{ user.username }}</h2>
+    {% if articles is empty %}
+        <p>No articles found.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Genre</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td><img src="{{ article.image }}" alt="Article Image" width="50" height="50"></td>
+                        <td>{{ article.nom }}</td>
+                        <td>{{ article.categorie }}</td>
+                        <td>{{ article.genre }}</td>
+                        <td>{{ article.prix }}</td>
+                        <td>
+                            <a href="{{ path('app_article_details', {id: article.id}) }}">View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

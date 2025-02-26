@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SearchController extends AbstractController
 {
     #[Route('/search', name: 'app_user_search')]
-    public function search(Request $request, UserRepository $userRepository): Response
+    public function search(Request $request, UserRepository $userRepository, ArticleRepository $articleRepository): Response
     {
         $search = $request->query->get('search', '');
 
@@ -26,6 +27,11 @@ class SearchController extends AbstractController
             return $this->redirectToRoute('app_profile');
         }
 
-        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
+        $articles = $articleRepository->findBy(['author' => $user]);
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+            'articles' => $articles,
+        ]);
     }
 }
