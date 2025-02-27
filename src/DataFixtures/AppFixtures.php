@@ -247,5 +247,19 @@ class AppFixtures extends Fixture
             $manager->persist($stock);
             $manager->flush();
         }
+
+        $options = [
+            'http' => [
+                'header' => [
+                    "Authorization: Bearer $jwt",
+                    "Content-Type: application/json"
+                ],
+                'method' => 'POST',
+                'content' => json_encode($data),
+            ],
+        ];
+
+        $context = stream_context_create($options);
+        $result = file_get_contents('https://example.com/.well-known/mercure', false, $context);
     }
 }
