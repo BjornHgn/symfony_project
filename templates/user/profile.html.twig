@@ -2,42 +2,60 @@
 
 {% block title %}Profile of {{ user.username }}{% endblock %}
 
-{% block body %}
-    <h1>Profile of {{ user.username }}</h1>
-    <p>Email: {{ user.email }}</p>
-    <p>Username: {{ user.username }}</p>
-    <p>Roles: {{ user.roles|join(', ') }}</p>
-    <img src="{{ user.profilPicture }}" alt="Profile Picture" width="100" height="100">
-
-    <h2>Articles by {{ user.username }}</h2>
-    {% if articles is empty %}
-        <p>No articles found.</p>
-    {% else %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Genre</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for article in articles %}
-                    <tr>
-                        <td><img src="{{ article.image }}" alt="Article Image" width="50" height="50"></td>
-                        <td>{{ article.nom }}</td>
-                        <td>{{ article.categorie }}</td>
-                        <td>{{ article.genre }}</td>
-                        <td>{{ article.prix }}</td>
-                        <td>
-                            <a href="{{ path('app_article_details', {id: article.id}) }}">View</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 {% endblock %}
+
+{% block body %}
+    <div class="profile-container">
+        <!-- Left column: User info -->
+        <div class="user-info">
+            <div class="user-profile">
+                <img src="{{ user.profilPicture }}" alt="Profile Picture" class="profile-picture">
+                <div class="user-details">
+                <p>{{ user.username }}</p>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right column: Articles -->
+        <div class="articles-section">
+            <h2>Les articles de {{ user.username }}</h2>
+            {% if articles is empty %}
+                <div class="no-articles">
+                    <p>No articles found.</p>
+                </div>
+            {% else %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Categories</th>
+                            <th>Genre</th>
+                            <th>Prix</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td><img src="{{ article.image }}" alt="Article Image" width="50" height="50"></td>
+                                <td>{{ article.nom }}</td>
+                                <td>{{ article.categorie }}</td>
+                                <td>{{ article.genre }}</td>
+                                <td>{{ article.prix }} €</td>
+                                <td>
+                                    <a href="{{ path('app_article_details', {id: article.id}) }}">Voir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
