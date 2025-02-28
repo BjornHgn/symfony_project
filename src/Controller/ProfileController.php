@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\ArticleRepository;
+use App\Repository\InvoiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function profile(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function profile(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, ArticleRepository $articleRepository, InvoiceRepository $invoiceRepository): Response
     {
         $user = $this->getUser();
 
@@ -60,6 +62,11 @@ class ProfileController extends AbstractController
                 }
             }
 
+            if ($request->request->get('credit_amount')) {
+                $creditAmount = (float) $request->request->get('credit_amount');
+                $user->setBalance($user->getBalance() + $creditAmount);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -68,9 +75,13 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('app_profile');
         }
 
+        $articles = $articleRepository->findBy(['author' => $user]);
+        $invoices = $invoiceRepository->findBy(['user' => $user]);
+
         return $this->render('home/profile.html.twig', [
             'user' => $user,
+            'articles' => $articles,
+            'invoices' => $invoices,
         ]);
     }
-
 }
