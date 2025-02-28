@@ -10,8 +10,8 @@
         <script src="{{ asset('script/script.js') }}"></script>
     {% endblock %}
 </head>
-<body>
 
+<body>
     <header>
         <a class="logo" href="/"></a>
         <nav>
@@ -66,13 +66,19 @@
             </div>
         </nav>
     </header>
+           {% for message in app.flashes('success') %}
+        <div class="alert alert-success" id="flash-message">
+            {{ message }}
+        </div>
+         {% endfor %}
 
     <main>
         {% block body %}
-       
+
 
         {% endblock %}
     </main>
+
 
     <footer>
         <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>

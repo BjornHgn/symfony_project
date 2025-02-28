@@ -11,11 +11,6 @@
 <div class="cart-container">
     <h1 class="cart-title">Mon Panier</h1>
 
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
 
     {% if cart is empty %}
         <p class="cart-empty">Votre panier est vide.</p>
