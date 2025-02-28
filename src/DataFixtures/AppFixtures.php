@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Stock;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+
 class AppFixtures extends Fixture
 {
     private $passwordHasher;
@@ -248,18 +249,9 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
-        $options = [
-            'http' => [
-                'header' => [
-                    "Authorization: Bearer $jwt",
-                    "Content-Type: application/json"
-                ],
-                'method' => 'POST',
-                'content' => json_encode($data),
-            ],
-        ];
 
-        $context = stream_context_create($options);
-        $result = file_get_contents('https://example.com/.well-known/mercure', false, $context);
+
+        $manager->persist($user);
+        $manager->flush();
     }
 }
