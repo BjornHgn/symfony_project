@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validation de la commande{% endblock %}
+
+{% block body %}
+<div class="cart-container">
+    <h1 class="cart-title">Validation de la commande</h1>
+
+    <p>Montant total : {{ total|number_format(2, ',', ' ') }} €</p>
+
+    <form action="{{ path('app_cart_validate') }}" method="post">
+        <h2>Informations de paiement</h2>
+
+        <div>
+            <input type="radio" id="credit_card" name="payment_method" value="credit_card" checked>
+            <label for="credit_card">Carte de crédit</label>
+        </div>
+        <div>
+            <label for="card_number">Numéro de carte :</label>
+            <input type="text" id="card_number" name="card_number" required>
+        </div>
+        <div>
+            <label for="expiry_date">Date d'expiration :</label>
+            <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA" required>
+        </div>
+        <div>
+            <label for="cvv">CVV :</label>
+            <input type="text" id="cvv" name="cvv" required>
+        </div>
+
+        <div>
+            <input type="radio" id="paypal" name="payment_method" value="paypal">
+            <label for="paypal">PayPal</label>
+        </div>
+        <div>
+            <label for="paypal_email">Email PayPal :</label>
+            <input type="email" id="paypal_email" name="paypal_email">
+        </div>
+
+        <button type="submit" class="btn btn-checkout">Valider la commande</button>
+    </form>
+
+    <a href="{{ path('app_home') }}" class="btn btn-continue">Retour à l'accueil</a>
+</div>
+{% endblock %}

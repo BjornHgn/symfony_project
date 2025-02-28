@@ -71,8 +71,8 @@
 
         <div class="cart-actions">
             <a href="{{ path('app_home') }}" class="btn btn-continue">Continuer mes achats</a>
-            <button class="btn btn-checkout">Passer la commande</button>
+            <a href="{{ path('app_cart_validate') }}" class="btn btn-checkout">Passer la commande</a>
         </div>
     {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

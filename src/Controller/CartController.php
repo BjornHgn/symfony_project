@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Entity\Article;
 
 class CartController extends AbstractController
 {
@@ -86,4 +86,53 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('app_cart_index');
     }
-} 
+
+    #[Route('/cart/validate', name: 'app_cart_validate')]
+    public function validate(Request $request, SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+        $total = 0;
+
+        // Calculer le total
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        $user = $this->getUser();
+
+        if ($request->isMethod('POST')) {
+            // Simulate payment processing
+            $paymentMethod = $request->request->get('payment_method');
+            if ($paymentMethod === 'credit_card') {
+                $cardNumber = $request->request->get('card_number');
+                $expiryDate = $request->request->get('expiry_date');
+                $cvv = $request->request->get('cvv');
+                // Here you would normally process the payment with a payment gateway
+            } elseif ($paymentMethod === 'paypal') {
+                $paypalEmail = $request->request->get('paypal_email');
+                // Here you would normally process the payment with PayPal
+            }
+
+            if ($user->getBalance() < $total) {
+                $this->addFlash('error', 'Vous n\'avez pas assez de crédit pour passer la commande.');
+                return $this->redirectToRoute('app_cart_index');
+            }
+
+            // Déduire le total du solde de l'utilisateur
+            $user->setBalance($user->getBalance() - $total);
+
+            // Vider le panier
+            $session->set('cart', []);
+
+            $this->addFlash('success', 'Commande validée avec succès !');
+
+            return $this->render('cart/validate.html.twig', [
+                'total' => $total,
+            ]);
+        }
+
+        return $this->render('cart/validate.html.twig', [
+            'total' => $total,
+        ]);
+    }
+}
