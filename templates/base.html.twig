@@ -7,6 +7,7 @@
     {% block stylesheets %}
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <script src="{{ asset('script/script.js') }}"></script>
     {% endblock %}
 </head>
 <body>
@@ -74,17 +75,6 @@
     <footer>
         <p>&copy; 2025 Mon E-commerce - Tous droits réservés</p>
     </footer>
-
-    <script>
-        function toggleSearchField() {
-            var searchForm = document.getElementById('searchForm');
-            if (searchForm.style.display === 'none') {
-                searchForm.style.display = 'block';
-            } else {
-                searchForm.style.display = 'none';
-            }
-        }
-    </script>
 
 </body>
 </html>
