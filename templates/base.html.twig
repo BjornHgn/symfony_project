@@ -41,8 +41,8 @@
             <div class="nav-icons">
                 <a href="javascript:void(0);" class="search" onclick="toggleSearchField()"></a>
                 <form method="get" action="{{ path('app_user_search') }}" class="search-form" id="searchForm" style="display: none;">
-                    <input type="text" name="search" placeholder="Search by username">
-                    <button type="submit">Search</button>
+                    <input type="text" name="search" placeholder="Chercher un vendeur">
+                    <button type="submit">Rechercher</button>
                 </form>
                 <a href="/cart" class="panier"></a>
                 {% if app.user %}
@@ -69,7 +69,8 @@
 
     <main>
         {% block body %}
-        <!-- Contenu spécifique de chaque page -->
+       
+
         {% endblock %}
     </main>
 

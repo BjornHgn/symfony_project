@@ -1,0 +1,140 @@
+
+.sell-article-container {
+    max-width: 800px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 40px;
+    background: linear-gradient(to bottom, #ffffff, #fafafa);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(26, 26, 46, 0.08);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sell-article-container h1 {
+    color: #1A1A2E;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.2em;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.sell-article-container h1:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background:  #C1A78E;
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: 28px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #1A1A2E;
+    font-weight: 500;
+    font-size: 0.95em;
+    letter-spacing: 0.3px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    background-color: #ffffff;
+    color: #1A1A2E;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 25px 16px;
+    border: 2px dashed #1A1A2E;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.form-group input[type="file"]::file-selector-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #1A1A2E;
+    color: white;
+    cursor: pointer;
+    margin-right: 16px;
+    transition: all 0.25s ease;
+    font-weight: 500;
+}
+
+.form-group input[type="file"]:hover {
+    border-color: #2A2A3E;
+    background-color: #f0f2f5;
+    transform: translateY(-1px);
+}
+
+.form-group input[type="file"]:hover::file-selector-button {
+    background: #2A2A3E;
+    transform: translateY(-1px);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2A2A3E;
+    box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.08);
+    background-color: #ffffff;
+}
+
+
+
+.button-primary {
+    width: 100%;
+    padding: 16px 24px;
+    background: #C1A78E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(26, 26, 46, 0.15);
+}
+
