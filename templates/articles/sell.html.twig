@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vendre un Article - Jeans-Lassape{% endblock %}
+
+{% block body %}
+<div class="sell-article-container">
+    <h1>Mettre en Vente un Article</h1>
+    <form method="POST" action="{{ path('app_add_article') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Nom de l'Article</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Prix (€)</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label for="stock">Quantité en Stock</label>
+            <input type="number" id="stock" name="stock" required min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Catégorie</label>
+            <select id="category" name="category" required>
+                <option value="">Sélectionnez une catégorie</option>
+                <option value="vêtements">Vêtements</option>
+                <option value="accessoires">Accessoires</option>
+                <option value="chaussures">Chaussures</option>
+                <option value="autres">Autres</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="genre">Genre</label>
+            <select id="genre" name="genre" required>
+                <option value="">Sélectionnez un genre</option>
+                <option value="homme">Homme</option>
+                <option value="femme">Femme</option>
+                <option value="unisexe">Unisexe</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image de l'Article</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+
+        <button type="submit" class="button-primary">Mettre en Vente</button>
+    </form>
+</div>
+{% endblock %}
