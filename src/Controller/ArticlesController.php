@@ -134,6 +134,12 @@ class ArticlesController extends AbstractController
             throw new AccessDeniedException('You do not have permission to delete this article.');
         }
 
+        $imagePath = $this->getParameter('kernel.project_dir') . '/public' . $article->getImage();
+
+        // Supprimer le fichier image si il existe
+        if (file_exists($imagePath)) {
+            unlink($imagePath); // Supprime le fichier
+        }
         $entityManager->remove($article);
         $entityManager->flush();
 

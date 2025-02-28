@@ -61,6 +61,7 @@ final class AdminController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
+        
 
         $entityManager->remove($user);
         $entityManager->flush();
