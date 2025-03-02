@@ -24,6 +24,5 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load -n
 
 
-### 
 
-extension a enlever  ; fileinfo dans php.ini
+Ps : extension a enlever  ; fileinfo dans php.ini
