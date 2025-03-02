@@ -25,4 +25,4 @@ php bin/console doctrine:fixtures:load -n
 
 
 
-Ps : extension a enlever  ; fileinfo dans php.ini
+Ps : extension à enlever  ; fileinfo dans php.ini
