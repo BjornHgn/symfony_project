@@ -1,15 +1,17 @@
 // public/script/script.js
-document.addEventListener('DOMContentLoaded', function() {
-    function toggleSearchField() {
-        const searchForm = document.getElementById('searchForm');
-        if (searchForm.style.display === 'none') {
-            searchForm.style.display = 'flex';
-            searchForm.querySelector('input').focus();
-        } else {
-            searchForm.style.display = 'none';
-        }
+function toggleSearchField() {
+    const searchForm = document.getElementById('searchForm');
+    const searchIcon = document.querySelector('.search');
+    
+    if (searchForm.style.display === 'none' || !searchForm.style.display) {
+        searchForm.style.display = 'flex';
+        searchForm.querySelector('input').focus();
+    } else {
+        searchForm.style.display = 'none';
     }
+}
 
+document.addEventListener('DOMContentLoaded', function() {
     // Close search form when clicking outside
     document.addEventListener('click', function(event) {
         const searchForm = document.getElementById('searchForm');

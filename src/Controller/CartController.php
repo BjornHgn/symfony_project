@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Article;
+use App\Entity\User;
+use App\Entity\Invoice;
+use App\Entity\InvoiceItem;
+use App\Repository\ArticleRepository;
+use App\Repository\StockRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CartController extends AbstractController
 {
@@ -88,51 +94,119 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/validate', name: 'app_cart_validate')]
-    public function validate(Request $request, SessionInterface $session): Response
-    {
-        $cart = $session->get('cart', []);
-        $total = 0;
-
-        // Calculer le total
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
+    public function validate(
+        SessionInterface $session,
+        ArticleRepository $articleRepository,
+        StockRepository $stockRepository
+    ): Response {
+        /** @var User $user */
+        $user = $this->getUser();
+        
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
         }
 
-        $user = $this->getUser();
+        $cart = $session->get('cart', []);
+        $cartData = [];
+        $total = 0;
 
-        if ($request->isMethod('POST')) {
-            // Simulate payment processing
-            $paymentMethod = $request->request->get('payment_method');
-            if ($paymentMethod === 'credit_card') {
-                $cardNumber = $request->request->get('card_number');
-                $expiryDate = $request->request->get('expiry_date');
-                $cvv = $request->request->get('cvv');
-                // Here you would normally process the payment with a payment gateway
-            } elseif ($paymentMethod === 'paypal') {
-                $paypalEmail = $request->request->get('paypal_email');
-                // Here you would normally process the payment with PayPal
+        foreach ($cart as $key => $item) {
+            list($articleId, $size) = explode('-', $key);
+            $article = $articleRepository->find($articleId);
+            if ($article) {
+                $cartData[] = [
+                    'article' => $article,
+                    'quantity' => $item['quantity'],
+                    'size' => $item['size']
+                ];
+                $total += $article->getPrix() * $item['quantity'];
             }
-
-            if ($user->getBalance() < $total) {
-                $this->addFlash('error', 'Vous n\'avez pas assez de crédit pour passer la commande.');
-                return $this->redirectToRoute('app_cart_index');
-            }
-
-            // Déduire le total du solde de l'utilisateur
-            $user->setBalance($user->getBalance() - $total);
-
-            // Vider le panier
-            $session->set('cart', []);
-
-            $this->addFlash('success', 'Commande validée avec succès !');
-
-            return $this->render('cart/validate.html.twig', [
-                'total' => $total,
-            ]);
         }
 
         return $this->render('cart/validate.html.twig', [
+            'cart' => $cartData,
             'total' => $total,
+            'user' => $user
         ]);
+    }
+
+    #[Route('/cart/validate/purchase', name: 'app_validate_purchase', methods: ['POST'])]
+    public function validatePurchase(
+        SessionInterface $session,
+        ArticleRepository $articleRepository,
+        StockRepository $stockRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        /** @var User $user */
+        $user = $this->getUser();
+        
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $cart = $session->get('cart', []);
+        $total = 0;
+
+        // Calculer le total et vérifier le stock
+        foreach ($cart as $key => $item) {
+            list($articleId, $size) = explode('-', $key);
+            $article = $articleRepository->find($articleId);
+            if ($article) {
+                $stock = $stockRepository->findOneBy(['article' => $article]);
+                if (!$stock || $stock->getNbrArticle() < $item['quantity']) {
+                    $this->addFlash('error', 'Stock insuffisant pour ' . $article->getNom());
+                    return $this->redirectToRoute('app_cart_validate');
+                }
+                $total += $article->getPrix() * $item['quantity'];
+            }
+        }
+
+        // Vérifier le solde
+        if ($user->getBalance() < $total) {
+            $this->addFlash('error', 'Solde insuffisant');
+            return $this->redirectToRoute('app_cart_validate');
+        }
+
+        // Créer la facture
+        $invoice = new Invoice();
+        $invoice->setUser($user);
+        $invoice->setUserId($user->getId());
+        $invoice->setDealDate(new \DateTime());
+        $invoice->setAmount((string)$total);
+        $invoice->setFacturationAddress($user->getFacturationAddress() ?? '');
+        $invoice->setFacturationCity($user->getFacturationCity() ?? '');
+        $invoice->setFacturationZipcode($user->getFacturationZipcode() ?? 0);
+        
+        $entityManager->persist($invoice);
+
+        // Procéder à l'achat
+        foreach ($cart as $key => $item) {
+            list($articleId, $size) = explode('-', $key);
+            $article = $articleRepository->find($articleId);
+            if ($article) {
+                $stock = $stockRepository->findOneBy(['article' => $article]);
+                $stock->setNbrArticle($stock->getNbrArticle() - $item['quantity']);
+                $entityManager->persist($stock);
+
+                $invoiceItem = new InvoiceItem();
+                $invoiceItem->setInvoice($invoice);
+                $invoiceItem->setArticle($article);
+                $invoiceItem->setQuantity($item['quantity']);
+                $invoiceItem->setPrice((string)$article->getPrix());
+                
+                $invoice->addItem($invoiceItem);
+            }
+        }
+
+        // Mettre à jour le solde de l'utilisateur
+        $user->setBalance($user->getBalance() - $total);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        // Vider le panier
+        $session->set('cart', []);
+
+        $this->addFlash('success', 'Achat effectué avec succès ! Une facture a été générée dans votre profil.');
+        return $this->redirectToRoute('app_profile');
     }
 }

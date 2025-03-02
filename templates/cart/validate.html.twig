@@ -2,44 +2,76 @@
 
 {% block title %}Validation de la commande{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/validate.css') }}">
+{% endblock %}
+
 {% block body %}
-<div class="cart-container">
-    <h1 class="cart-title">Validation de la commande</h1>
+<div class="validate-page">
+    <div class="validate-container">
+        <h1>Récapitulatif de votre commande</h1>
 
-    <p>Montant total : {{ total|number_format(2, ',', ' ') }} €</p>
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
-    <form action="{{ path('app_cart_validate') }}" method="post">
-        <h2>Informations de paiement</h2>
+        <div class="order-summary">
+            <div class="balance-info">
+                <span class="balance-label">Votre solde :</span>
+                <span class="balance-amount">{{ user.balance }} €</span>
+            </div>
 
-        <div>
-            <input type="radio" id="credit_card" name="payment_method" value="credit_card" checked>
-            <label for="credit_card">Carte de crédit</label>
-        </div>
-        <div>
-            <label for="card_number">Numéro de carte :</label>
-            <input type="text" id="card_number" name="card_number" required>
-        </div>
-        <div>
-            <label for="expiry_date">Date d'expiration :</label>
-            <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/AA" required>
-        </div>
-        <div>
-            <label for="cvv">CVV :</label>
-            <input type="text" id="cvv" name="cvv" required>
+            <div class="cart-items">
+                {% if cart is empty %}
+                    <p class="empty-cart">Votre panier est vide</p>
+                {% else %}
+                    {% for item in cart %}
+                        <div class="cart-item">
+                            <img src="{{ item.article.image }}" alt="{{ item.article.nom }}" class="item-image">
+                            <div class="item-details">
+                                <h3>{{ item.article.nom }}</h3>
+                                <p class="item-category">{{ item.article.categorie }} - {{ item.article.genre }}</p>
+                                <p class="item-price">{{ item.article.prix }} €</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <div class="cart-total">
+                        <span class="total-label">Total :</span>
+                        <span class="total-amount">{{ total }} €</span>
+                    </div>
+
+                    {% if user.balance >= total %}
+                        <form action="{{ path('app_validate_purchase') }}" method="post" class="validate-form">
+                            <button type="submit" class="validate-button">
+                                <i class="fas fa-check"></i>
+                                Confirmer l'achat
+                            </button>
+                        </form>
+                    {% else %}
+                        <div class="insufficient-funds">
+                            <p>Solde insuffisant</p>
+                            <p class="missing-amount">Il vous manque {{ total - user.balance }} €</p>
+                            <a href="{{ path('app_profile') }}" class="add-funds-button">
+                                <i class="fas fa-plus-circle"></i>
+                                Ajouter des fonds
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
 
-        <div>
-            <input type="radio" id="paypal" name="payment_method" value="paypal">
-            <label for="paypal">PayPal</label>
+        <div class="actions">
+            <a href="{{ path('app_cart_index') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Retour au panier
+            </a>
         </div>
-        <div>
-            <label for="paypal_email">Email PayPal :</label>
-            <input type="email" id="paypal_email" name="paypal_email">
-        </div>
-
-        <button type="submit" class="btn btn-checkout">Valider la commande</button>
-    </form>
-
-    <a href="{{ path('app_home') }}" class="btn btn-continue">Retour à l'accueil</a>
+    </div>
 </div>
 {% endblock %}

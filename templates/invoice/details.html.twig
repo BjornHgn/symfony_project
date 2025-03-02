@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la facture{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <div>
+                <h1>Facture #{{ invoice.id }}</h1>
+                <p>Date : {{ invoice.dealDate|date('d/m/Y') }}</p>
+            </div>
+            <div>
+                <p>{{ invoice.user.username }}</p>
+
+            </div>
+        </div>
+
+        <div class="invoice-info">
+            <h2>Articles achetés</h2>
+            <table class="invoice-items">
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.items %}
+                        <tr>
+                            <td>
+                                <div class="item-info">
+                                    <img src="{{ item.article.image }}" alt="{{ item.article.nom }}">
+                                    <div>
+                                        <p class="item-name">{{ item.article.nom }}</p>
+                                        <p class="item-category">{{ item.article.categorie }} - {{ item.article.genre }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{ item.price }} €</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ (item.price * item.quantity)|number_format(2, '.', ' ') }} €</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="invoice-total">
+            Total payé : {{ invoice.amount }} €
+        </div>
+
+        <a href="{{ path('app_profile') }}" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour au profil
+        </a>
+    </div>
+{% endblock %} 

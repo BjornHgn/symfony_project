@@ -43,6 +43,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $profil_picture = "/images/pngegg.png";
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $facturation_address = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $facturation_city = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $facturation_zipcode = null;
+
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
     private Collection $articles;
 
@@ -55,6 +64,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->carts = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,6 +175,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->profil_picture = $profil_picture;
 
+        return $this;
+    }
+
+    public function getFacturationAddress(): ?string
+    {
+        return $this->facturation_address;
+    }
+
+    public function setFacturationAddress(?string $facturation_address): self
+    {
+        $this->facturation_address = $facturation_address;
+        return $this;
+    }
+
+    public function getFacturationCity(): ?string
+    {
+        return $this->facturation_city;
+    }
+
+    public function setFacturationCity(?string $facturation_city): self
+    {
+        $this->facturation_city = $facturation_city;
+        return $this;
+    }
+
+    public function getFacturationZipcode(): ?int
+    {
+        return $this->facturation_zipcode;
+    }
+
+    public function setFacturationZipcode(?int $facturation_zipcode): self
+    {
+        $this->facturation_zipcode = $facturation_zipcode;
         return $this;
     }
 

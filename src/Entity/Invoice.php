@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InvoiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -36,9 +38,28 @@ class Invoice
     #[ORM\Column]
     private ?int $facturation_zipcode = null;
 
+    #[ORM\OneToMany(mappedBy: "invoice", targetEntity: InvoiceItem::class, cascade: ["persist", "remove"])]
+    private Collection $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+        return $this;
     }
 
     public function getUserId(): ?int
@@ -109,6 +130,35 @@ class Invoice
     public function setFacturationZipcode(int $facturation_zipcode): static
     {
         $this->facturation_zipcode = $facturation_zipcode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, InvoiceItem>
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(InvoiceItem $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setInvoice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(InvoiceItem $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            if ($item->getInvoice() === $this) {
+                $item->setInvoice(null);
+            }
+        }
 
         return $this;
     }

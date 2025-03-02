@@ -1,0 +1,89 @@
+.invoice-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-info {
+    margin-bottom: 2rem;
+}
+
+.invoice-info p {
+    margin: 0.5rem 0;
+}
+
+.invoice-items {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.invoice-items th,
+.invoice-items td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice-items th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.item-info img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.item-name {
+    font-weight: 600;
+    margin: 0;
+}
+
+.item-category {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.2rem 0 0 0;
+}
+
+.invoice-total {
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: #1A1A2E;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.back-button:hover {
+    background: #34344e;
+} 

@@ -99,6 +99,8 @@ nav {
     margin-right: 100px;
     display: flex;
     gap: 20px;
+    align-items: center;
+    position: relative;
 }
 
 .search, .panier, .profile {
@@ -111,6 +113,7 @@ nav {
 }
 .search {
     background-image: url('/images/search.png');
+    cursor: pointer;
 }
 
 .panier {
@@ -123,28 +126,28 @@ nav {
 
 .search-form {
     position: relative;
-
-    right: 0;
     background: linear-gradient(to bottom, #ffffff, #fafafa);
-    padding: 8px;
+    padding: 0;
     border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    display: flex;
+    display: none;
     align-items: center;
-    gap: 8px;
-    min-width: 300px;
+    width: 300px;
     border: 2px solid #e5e7eb;
     transition: all 0.3s ease;
+    margin-left: 10px;
+    overflow: hidden;
 }
 
 .search-form input[type="text"] {
     flex: 1;
     border: none;
     background: transparent;
-    padding: 8px 16px;
+    padding: 12px 16px;
     font-size: 14px;
     color: #1A1A2E;
     outline: none;
+    width: calc(100% - 100px);
 }
 
 .search-form input[type="text"]::placeholder {
@@ -155,11 +158,13 @@ nav {
     background: #D8C3A5;
     color: white;
     border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
+    padding: 12px 20px;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
 }
 
 .search-form button:hover {
