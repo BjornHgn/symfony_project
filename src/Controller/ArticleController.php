@@ -10,6 +10,7 @@ use App\Repository\StockRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Stock;
+use App\Form\ArticleType;
 
 class ArticleController extends AbstractController
 {
@@ -31,61 +32,45 @@ class ArticleController extends AbstractController
     #[Route('/sell', name: 'app_add_article')]
     public function addArticle(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if ($request->isMethod('POST')) {
-            // Récupérer les données du formulaire
-            $name = $request->request->get('name');
-            $description = $request->request->get('description');
-            $price = $request->request->get('price');
-            $category = $request->request->get('category');
-            $genre = $request->request->get('genre');
-            $imageFile = $request->files->get('image');
-            $stockQuantity = $request->request->get('stock'); // Récupérer la quantité de stock
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
 
-            // Créer une nouvelle instance de l'article
-            $article = new Article();
-            $article->setNom($name);
-            $article->setDescription($description);
-            $article->setPrix($price);
-            $article->setCategorie($category);
-            $article->setGenre($genre);
-            $article->setCreatedAt(new \DateTime()); // Définir la date de création
-
-            // Définir l'auteur (par exemple, l'utilisateur connecté)
-            $user = $this->getUser(); // Récupérer l'utilisateur connecté
-            if ($user) {
-                $article->setAuthor($user); // Assurez-vous que l'utilisateur est défini
-            } else {
-                // Gérer le cas où l'utilisateur n'est pas connecté
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article->setCreatedAt(new \DateTime());
+            
+            // Définir l'auteur
+            $user = $this->getUser();
+            if (!$user) {
                 $this->addFlash('error', 'Vous devez être connecté pour vendre un article.');
-                return $this->redirectToRoute('app_login'); // Redirige vers la page de connexion
+                return $this->redirectToRoute('app_login');
             }
+            $article->setAuthor($user);
 
             // Gérer le téléchargement de l'image
+            $imageFile = $form->get('imageFile')->getData();
             if ($imageFile) {
-                // Générer un nom de fichier unique
                 $filename = uniqid() . '.' . $imageFile->guessExtension();
-                
-                // Déplacer le fichier vers le répertoire public/articles
                 $imageFile->move($this->getParameter('articles_directory'), $filename);
-                
-                // Enregistrer le chemin de l'image dans l'article
-                $article->setImage('/articles/' . $filename); // Assurez-vous que votre entité Article a une méthode setImage()
+                $article->setImage('/articles/' . $filename);
             }
 
             // Créer une nouvelle instance de Stock
             $stock = new Stock();
-            $stock->setNbrArticle($stockQuantity); // Définir la quantité de stock
-            $stock->setArticle($article); // Lier le stock à l'article
+            $stock->setNbrArticle($form->get('stock')->getData());
+            $stock->setArticle($article);
 
-            // Enregistrer l'article et le stock dans la base de données
+            // Enregistrer l'article et le stock
             $entityManager->persist($article);
             $entityManager->persist($stock);
             $entityManager->flush();
 
             $this->addFlash('success', 'Article mis en vente avec succès.');
-            return $this->redirectToRoute('app_home'); // Redirige vers la page d'accueil ou une autre page
+            return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('articles/sell.html.twig');
+        return $this->render('articles/sell.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 } 

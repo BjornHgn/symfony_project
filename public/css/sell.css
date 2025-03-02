@@ -1,4 +1,3 @@
-
 .sell-article-container {
     max-width: 800px;
     width: 100%;
@@ -115,8 +114,6 @@
     background-color: #ffffff;
 }
 
-
-
 .button-primary {
     width: 100%;
     padding: 16px 24px;
@@ -136,5 +133,44 @@
 .button-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(26, 26, 46, 0.15);
+}
+
+/* Styles pour les messages d'erreur */
+.form-error-message {
+    color: #dc3545;
+    font-size: 0.85em;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Style spécifique pour le champ prix */
+.form-group input[type="money"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    background-color: #ffffff;
+    color: #1A1A2E;
+    box-sizing: border-box;
+}
+
+.form-group input[type="money"]:focus {
+    outline: none;
+    border-color: #2A2A3E;
+    box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.08);
+    background-color: #ffffff;
+}
+
+/* Style pour le symbole de la devise */
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 2px solid #e5e7eb;
+    border-left: none;
+    padding: 14px 16px;
+    color: #1A1A2E;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
