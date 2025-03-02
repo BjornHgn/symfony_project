@@ -37,9 +37,13 @@ class ArticleType extends AbstractType
                     ])
                 ]
             ])
-            ->add('prix', MoneyType::class, [
+            ->add('prix', NumberType::class, [
                 'label' => 'Prix (€)',
-                'currency' => 'EUR',
+                'html5' => true,
+                'attr' => [
+                    'min' => '0',
+                    'step' => '0.01'
+                ],
                 'constraints' => [
                     new Positive([
                         'message' => 'Le prix doit être positif'
@@ -82,8 +86,12 @@ class ArticleType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
-                        'extensions' => ['jpg', 'jpeg', 'png', 'webp'],
-                        'extensionsMessage' => 'Veuillez uploader une image au format JPG, PNG ou WEBP',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG, PNG ou WEBP)'
                     ])
                 ]
             ])

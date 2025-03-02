@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vendre un Article - Jeans-Lassape{% endblock %}
+{%{% block title %}Vendre un Article - Jeans-Lassape{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/sell.css') }}">
@@ -78,9 +78,7 @@
                     {{ form_errors(form.imageFile) }}
                 </div>
             {% endif %}
-        </div>
-
-        <button type="submit" class="button-primary">Mettre en Vente</button>
+>Mettre en Vente</button>
     {{ form_end(form) }}
 </div>
 {% endblock %}
