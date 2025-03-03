@@ -50,4 +50,4 @@ Symfony utilise fileinfo pour gérer l'upload et le traitement des fichiers.
 
 Si cette extension est désactivée, certaines fonctionnalités comme l'upload d'images ne fonctionneront pas.
 
-Pour l'activer, trouve et décommente la ligne suivante dans php.ini (en retirant le ; devant) 
+Pour l'activer, trouve et décommente la ligne suivante dans le fichier php.ini (en retirant le ; devant) 
