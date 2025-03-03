@@ -1,4 +1,4 @@
-.sell-article-container {
+.edit-article-container {
     max-width: 800px;
     width: 100%;
     margin: 40px auto;
@@ -7,10 +7,9 @@
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(26, 26, 46, 0.08);
     box-sizing: border-box;
-    overflow: hidden;
 }
 
-.sell-article-container h1 {
+.edit-article-container h1 {
     color: #1A1A2E;
     text-align: center;
     margin-bottom: 40px;
@@ -20,7 +19,7 @@
     padding-bottom: 15px;
 }
 
-.sell-article-container h1:after {
+.edit-article-container h1:after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -28,15 +27,13 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background:  #C1A78E;
+    background: #C1A78E;
     border-radius: 2px;
 }
 
 .form-group {
     margin-bottom: 28px;
     position: relative;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 .form-group label {
@@ -77,9 +74,6 @@
     cursor: pointer;
     background-color: #f8f9fa;
     transition: all 0.25s ease;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
 }
 
 .form-group input[type="file"]::file-selector-button {
@@ -97,25 +91,28 @@
 .form-group input[type="file"]:hover {
     border-color: #2A2A3E;
     background-color: #f0f2f5;
-    transform: translateY(-1px);
 }
 
 .form-group input[type="file"]:hover::file-selector-button {
     background: #2A2A3E;
-    transform: translateY(-1px);
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #2A2A3E;
-    box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.08);
-    background-color: #ffffff;
+    border-color: #C1A78E;
+    box-shadow: 0 0 0 4px rgba(193, 167, 142, 0.1);
 }
 
-.button-primary {
-    width: 100%;
+.button-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.button-save {
+    flex: 1;
     padding: 16px 24px;
     background: #C1A78E;
     color: white;
@@ -125,17 +122,39 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 25px;
     text-transform: uppercase;
     letter-spacing: 0.8px;
 }
 
-.button-primary:hover {
+.button-save:hover {
+    background: #b39577;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(26, 26, 46, 0.15);
+    box-shadow: 0 6px 15px rgba(193, 167, 142, 0.2);
 }
 
-/* Styles pour les messages d'erreur */
+.button-cancel {
+    flex: 1;
+    padding: 16px 24px;
+    background: #1A1A2E;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.button-cancel:hover {
+    background: #2A2A3E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(26, 26, 46, 0.2);
+}
+
 .form-error-message {
     color: #dc3545;
     font-size: 0.85em;
@@ -143,67 +162,14 @@
     display: block;
 }
 
-/* Style spécifique pour le champ prix */
-.form-group input[type="money"] {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #e5e7eb;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: all 0.25s ease;
-    background-color: #ffffff;
-    color: #1A1A2E;
-    box-sizing: border-box;
+/* Style pour l'image actuelle */
+.current-image {
+    margin: 15px 0;
+    text-align: center;
 }
 
-.form-group input[type="money"]:focus {
-    outline: none;
-    border-color: #2A2A3E;
-    box-shadow: 0 0 0 4px rgba(26, 26, 46, 0.08);
-    background-color: #ffffff;
-}
-
-/* Style pour le symbole de la devise */
-.input-group-text {
-    background-color: #f8f9fa;
-    border: 2px solid #e5e7eb;
-    border-left: none;
-    padding: 14px 16px;
-    color: #1A1A2E;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.edit-buttons {
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
-}
-
-.button-edit {
-    padding: 8px 16px;
-    background: #4CAF50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.button-edit:hover {
-    background: #45a049;
-}
-
-.button-delete {
-    padding: 8px 16px;
-    background: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.button-delete:hover {
-    background: #c82333;
-}
-
+.current-image img {
+    max-width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} 

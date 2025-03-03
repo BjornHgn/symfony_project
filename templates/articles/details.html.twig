@@ -36,11 +36,15 @@
             </form>
 
             {% if app.user and (app.user == article.author or is_granted('ROLE_ADMIN')) %}
-                <a href="{{ path('app_article_edit', {id: article.id}) }}">Edit</a>
-                <form action="{{ path('app_article_delete', {id: article.id}) }}" method="post" style="display:inline;">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cet article?');">Delete</button>
-                </form>
+                <div class="edit-buttons">
+                    <form action="{{ path('app_article_edit', {id: article.id}) }}" method="get" style="display:inline;">
+                        <button type="submit" class="button-edit">Éditer</button>
+                    </form>
+                    <form action="{{ path('app_article_delete', {id: article.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="button-delete" onclick="return confirm('Voulez-vous vraiment supprimer cet article?');">Supprimer</button>
+                    </form>
+                </div>
             {% endif %}
         </div>
     </div>
